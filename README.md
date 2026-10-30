@@ -1,43 +1,43 @@
-### Hi, I'm Shree 👋
+## Hi, I'm Shree 👋
 
-AI/ML Engineer focused on Generative AI, multi-agent systems, and RAG architectures — I like building things that go beyond a notebook and actually run as a service.
+I'm an AI/ML engineer who builds LLM systems and then checks whether they actually work. Most of my projects come with a benchmark. Most of my best results came from finding a number that was wrong and fixing it: a lenient eval metric, a judge scoring runs that never happened, a "falsified" claim the data couldn't support.
 
-🔭 Currently building agentic workflows with LangGraph and fine-tuning open-source LLMs for domain-specific tasks
-🧠 Interested in: multi-agent orchestration, hybrid retrieval, efficient fine-tuning (QLoRA/PEFT)
-📫 Reach me: shreelondhe2004@gmail.com | [LinkedIn](https://linkedin.com/in/shree-londhe-b082b2245)
+I work on **RAG over messy real-world documents**, **multi-agent pipelines**, and **evaluation harnesses for LLM agents**. I graduated in 2026 with a B.Tech in IT.
 
-## 🚀 Featured Projects
+[Portfolio](https://portfolio-bice-nine-ekrh7ppg1i.vercel.app) · [LinkedIn](https://linkedin.com/in/shree-londhe-b082b2245) · shreelondhe2004@gmail.com
 
-### 🤖 [Multi-Agent Research Assistant](https://github.com/Shree-2004/Multi-Agent-Research-Assistant)
-A production-style multi-agent system built on LangGraph StateGraph — 4 specialized agents (Researcher, Analyst, Writer, Critic) coordinating through shared state.
+---
 
-- Reflection loop: Critic runs a 5-point verification checklist, routing back to the Analyst for up to 2 self-correction cycles
-- Custom latency/quality benchmark suite tracking citation frequency and performance drift over time
-- Stack: LangGraph, Gemini 2.0, Tavily, ArXiv API
+### Featured work
 
-### 📊 [SEBI/BSE Financial Filing RAG Analyzer](https://github.com/Shree-2004/SEBI-BSE-Financial-Filing-RAG)
-A hybrid-retrieval RAG system built for dense financial documents — tables, filings, and mixed layouts.
+**[FinFiling RAG](https://github.com/Shree-2004/SEBI-BSE-Financial-Filing-RAG-Analyzer)**: question answering over Indian SEBI/BSE financial filings · [live demo](https://sebi-bse-financial-filing-rag-analy.vercel.app)
+- **93.5% strict accuracy** (116/124) across 13 companies. It says so instead of inventing a number on 6/6 unanswerable questions.
+- I found the old 95.6% score came from a lenient metric (the real figure was 29%). Rebuilding the parsing with Docling brought it to 87% on the same questions.
+- A tool-using agent handles comparisons and growth questions (13/13 vs 5/13 for plain RAG). A cell-level verifier catches 85% of wrong figures.
+- Runs in a 512 MB free tier thanks to ONNX int8 · Qdrant + BM25 hybrid search · FastAPI · Groq
 
-- Combines dense vector search (BAAI/bge-base-en-v1.5) with sparse BM25 for precision on both semantic queries and exact figures
-- Structure-aware ingestion using pdfplumber + Tesseract OCR to preserve table integrity through chunking
-- CrossEncoder re-ranking + citation verification layer to keep generation grounded in source text
-- Stack: Qdrant, FastAPI, BM25, PyTorch
+**[stock-judgment-bench](https://github.com/Shree-2004/stock-judgment-bench)**: does an LLM's stock judgement hold up once lookahead leakage is removed?
+- 3,690 point-in-time briefs on 41 NSE stocks across 90 windows (2019–2026). **No detectable edge** (rank corr −0.015, 95% CI −0.061 to +0.031).
+- Cited figures are 99.98% correct, with 0 fabricated filing citations in 8,804 claims. The model gets the facts right and still can't predict returns.
+- Now running as a live, hash-chained prediction ledger, so every call is made after the model's training cutoff.
 
-### 💰 [Domain Fine-Tuned Finance LLM](https://github.com/Shree-2004/Finance-llm)
-Fine-tuned Mistral-7B-Instruct on localized Indian personal finance data.
+**[AgentLens](https://github.com/Shree-2004/agentlens)**: a trace debugger that finds the step where a multi-step agent run went wrong
+- An LLM judge, scored against hand-labelled traces: **28/30 on the labelled step, 0 false positives**.
+- Prompt-injection hardening: a false accusation planted in tool output dropped from 3/3 to 0/3. Code checks every quote the judge cites (89/91 found).
 
-- QLoRA (4-bit NormalFloat) fine-tuning — 4× memory footprint reduction
-- Ran a systematic LoRA rank ablation (r=8/16/32) tracked in MLflow
-- +88.6% improvement in target keyword coverage after tuning
-- Merged adapters back into 16-bit weights, pushed to HuggingFace Hub, deployed via Gradio
-- Stack: Mistral-7B, QLoRA, MLflow, HuggingFace
+**[Multi-Agent Research Assistant](https://github.com/Shree-2004/Multi-Agent-Research-Assistant)**: a 5-agent LangGraph pipeline (Researcher → Analyst → Writer → Verifier → Critic)
+- A Citation Verifier checks each cited claim against its source. This revealed that a revision can make citations *worse*, so a guard ships the best draft, not the last one.
+- Retries and graceful degradation · CI-tested · Gemini, Tavily, ArXiv
 
-## 🛠️ Tech Stack
+<sub>Also: [AgentSentinel](https://github.com/Shree-2004/Agentsentinel) (agent red-teaming harness) · [finance-agent](https://github.com/Shree-2004/finance-agent) (Google ADK + MCP) · [Self-Healing RAG](https://github.com/Shree-2004/Self-Healing-RAG) · [Finance-llm](https://github.com/Shree-2004/Finance-llm) (QLoRA on Mistral-7B)</sub>
 
-**Languages & Core:** Python · C++ · SQL · Git
-**ML/DL:** PyTorch · TensorFlow · Scikit-learn · HF Transformers · PEFT/LoRA
-**GenAI:** LangGraph · LangChain · LlamaIndex · CrewAI · OpenAI API · Gemini 2.0
-**Retrieval/Storage:** Qdrant · FAISS · ChromaDB · Pinecone · PostgreSQL · BM25
-**MLOps:** FastAPI · Docker · MLflow · Weights & Biases · Streamlit · Gradio
+---
 
-⭐ Open to AI/ML Engineer and Applied ML roles — feel free to reach out!
+### Tools I use
+
+**LLM & agents:** LangGraph · LangChain · LlamaIndex · CrewAI · OpenAI / Gemini / Groq APIs
+**Retrieval:** Qdrant · FAISS · BM25 · cross-encoder reranking · Docling
+**ML:** Python · PyTorch · TensorFlow · Hugging Face Transformers · PEFT/QLoRA · scikit-learn
+**Shipping:** FastAPI · Docker · ONNX Runtime · GitHub Actions · MLflow · W&B · Streamlit · SQL
+
+Open to AI/ML Engineer and Applied ML roles.
